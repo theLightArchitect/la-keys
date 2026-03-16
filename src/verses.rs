@@ -430,6 +430,381 @@ static VERSES: &[Verse] = &[
         text: "No weapon that is formed against thee, shall prosper.",
         doctrine: "protection",
     },
+    // ── 18. The "I AM" Statements of Jesus ────────────────────────────────
+    Verse {
+        reference: "John 6:35",
+        text: "And Iesus said vnto them, I am the bread of life: hee that commeth to me, shall neuer hunger: and he that beleeueth on me, shall neuer thirst.",
+        doctrine: "i_am_statements",
+    },
+    Verse {
+        reference: "John 8:12",
+        text: "Then spake Iesus againe vnto them, saying, I am the light of the world: he that followeth me, shall not walke in darknesse, but shall haue the light of life.",
+        doctrine: "i_am_statements",
+    },
+    Verse {
+        reference: "John 8:58",
+        text: "Iesus said vnto them, Uerily, verily I say vnto you, before Abraham was, I am.",
+        doctrine: "i_am_statements",
+    },
+    Verse {
+        reference: "John 10:9",
+        text: "I am the doore: by me if any man enter in, hee shall be saued, and shall goe in and out, and find pasture.",
+        doctrine: "i_am_statements",
+    },
+    Verse {
+        reference: "John 10:11",
+        text: "I am the good shepheard: the good shepheard giueth his life for the sheepe.",
+        doctrine: "i_am_statements",
+    },
+    Verse {
+        reference: "John 10:14",
+        text: "I am the good shepheard, and know my sheepe, and am knowen of mine.",
+        doctrine: "i_am_statements",
+    },
+    Verse {
+        reference: "John 15:1",
+        text: "I am the true vine, and my Father is the husbandman.",
+        doctrine: "i_am_statements",
+    },
+    Verse {
+        reference: "John 15:5",
+        text: "I am the vine, yee are the branches: he that abideth in me, and I in him, the same bringeth forth much fruit: for without me ye can doe nothing.",
+        doctrine: "i_am_statements",
+    },
+    // ── 19. Words and Teachings of Jesus ───────────────────────────────────
+    Verse {
+        reference: "Matthew 5:14",
+        text: "Ye are the light of the world. A citie that is set on an hill, cannot be hid.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Matthew 5:44",
+        text: "But I say vnto you, Loue your enemies, blesse them that curse you, doe good to them that hate you, and pray for them which despitefully vse you, and persecute you.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Matthew 6:33",
+        text: "But seeke ye first the kingdome of God, and his righteousnesse, and all these things shall be added vnto you.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Matthew 7:7",
+        text: "Aske, and it shall be giuen you: seeke, and ye shall finde: knocke, and it shall be opened vnto you.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Matthew 11:28",
+        text: "Come vnto me all ye that labour, and are heauy laden, and I will giue you rest.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Matthew 11:29",
+        text: "Take my yoke vpon you, and learne of me, for I am meeke and lowly in heart: and ye shall find rest vnto your soules.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Matthew 18:20",
+        text: "For where two or three are gathered together in my Name, there am I in the midst of them.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Matthew 28:20",
+        text: "Teaching them to obserue all things, whatsoeuer I haue commanded you: and loe, I am with you alway, euen vnto the end of the world. Amen.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Mark 10:45",
+        text: "For euen the Sonne of man came not to be ministred vnto, but to minister, and to giue his life a ransome for many.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "Luke 19:10",
+        text: "For the Sonne of man is come to seeke, and to saue that which was lost.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 3:3",
+        text: "Iesus answered, and said vnto him, Uerily, verily I say vnto thee, except a man be borne againe, he cannot see the kingdome of God.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 4:14",
+        text: "But whosoeuer drinketh of the water that I shall giue him, shall neuer thirst: but the water that I shall giue him, shalbe in him a well of water springing vp into euerlasting life.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 5:24",
+        text: "Uerily, verily I say vnto you, he that heareth my word, and beleeueth on him that sent mee, hath euerlasting life, and shall not come into condemnation: but is passed from death vnto life.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 6:47",
+        text: "Uerily, verily I say vnto you, he that beleeueth on me, hath euerlasting life.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 8:32",
+        text: "And ye shall know the Trueth, and the Trueth shall make you free.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 8:36",
+        text: "If the Sonne therefore shall make you free, ye shall be free indeed.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 10:27-28",
+        text: "My sheepe heare my voyce, and I know them, and they follow me. And I giue vnto them eternall life, and they shall neuer perish, neither shall any man plucke them out of my hand.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 12:46",
+        text: "I am come a light into the world, that whosoeuer beleeueth on mee, should not abide in darkenesse.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 14:1-2",
+        text: "Let not your heart be troubled: ye beleeue in God, beleeue also in me. In my Fathers house are many mansions; if it were not so, I would haue told you: I goe to prepare a place for you.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 14:27",
+        text: "Peace I leaue with you, my peace I giue vnto you: not as the world giueth, giue I vnto you. Let not your heart bee troubled, neither let it bee afraid.",
+        doctrine: "teachings_of_jesus",
+    },
+    Verse {
+        reference: "John 16:33",
+        text: "These things I haue spoken vnto you, that in me ye might haue peace. In the world ye shall haue tribulation: but be of good cheere, I haue ouercome the world.",
+        doctrine: "teachings_of_jesus",
+    },
+    // ── 20. Messianic Prophecies Fulfilled in Jesus ───────────────────────
+    Verse {
+        reference: "Isaiah 9:6",
+        text: "For vnto vs a child is borne, vnto vs a Sonne is giuen, and the gouernment shall be vpon his shoulder: and his Name shalbe called, Wonderfull, Counsellor, The mightie God, The euerlasting Father, The Prince of peace.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Micah 5:2",
+        text: "But thou Bethlehem Ephratah, though thou be little among the thousands of Iudah, yet out of thee shall he come foorth vnto mee, that is to bee ruler in Israel: whose goings foorth haue bene from of old, from euerlasting.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Isaiah 53:3",
+        text: "He is despised and reiected of men, a man of sorrowes, and acquainted with griefe: and wee hid as it were our faces from him; he was despised and we esteemed him not.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Isaiah 53:7",
+        text: "He was oppressed, and he was afflicted, yet hee opened not his mouth: hee is brought as a lambe to the slaughter, and as a sheepe before her shearers is dumme, so he openeth not his mouth.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Psalm 22:16",
+        text: "For dogges haue compassed me: the assembly of the wicked haue inclosed me: they pierced my hands and my feete.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Psalm 22:18",
+        text: "They part my garments among them: and cast lots vpon my vesture.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Zechariah 9:9",
+        text: "Reioyce greatly, O daughter of Zion; shout, O daughter of Ierusalem: behold, thy King commeth vnto thee: he is iust, and hauing saluation, lowly, and riding vpon an asse.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Psalm 16:10",
+        text: "For thou wilt not leaue my soule in hell: neither wilt thou suffer thine Holy one to see corruption.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Daniel 7:13-14",
+        text: "I saw in the night visions, and behold, one like the Sonne of man came with the clouds of heauen. And there was giuen him dominion, and glory, and a kingdome, that all people, nations and languages should serue him.",
+        doctrine: "messianic_prophecy",
+    },
+    Verse {
+        reference: "Isaiah 11:1-2",
+        text: "And there shall come foorth a rod out of the stemme of Iesse, and a branch shall grow out of his rootes. And the Spirit of the LORD shall rest vpon him.",
+        doctrine: "messianic_prophecy",
+    },
+    // ── 21. The Cross and Passion of Christ ───────────────────────────────
+    Verse {
+        reference: "Matthew 27:46",
+        text: "And about the ninth houre, Iesus cryed with a loud voyce, saying, Eli, Eli, Lama sabachthani, that is to say, My God, my God, why hast thou forsaken mee?",
+        doctrine: "passion_of_christ",
+    },
+    Verse {
+        reference: "Luke 23:34",
+        text: "Then saide Iesus, Father, forgiue them, for they know not what they doe.",
+        doctrine: "passion_of_christ",
+    },
+    Verse {
+        reference: "Luke 23:43",
+        text: "And Iesus said vnto him, Uerily, I say vnto thee, to day shalt thou be with me in Paradise.",
+        doctrine: "passion_of_christ",
+    },
+    Verse {
+        reference: "John 19:30",
+        text: "When Iesus therefore had receiued the vineger, hee said, It is finished: and he bowed his head, and gaue vp the ghost.",
+        doctrine: "passion_of_christ",
+    },
+    Verse {
+        reference: "Luke 23:46",
+        text: "And when Iesus had cryed with a loud voyce, hee said, Father, into thy hands I commend my spirit: and hauing said thus, he gaue vp the ghost.",
+        doctrine: "passion_of_christ",
+    },
+    Verse {
+        reference: "Galatians 2:20",
+        text: "I am crucified with Christ: neuerthelesse I liue, yet not I, but Christ liueth in me: and the life which I now liue in the flesh, I liue by the faith of the Sonne of God, who loued me, and gaue himselfe for me.",
+        doctrine: "passion_of_christ",
+    },
+    Verse {
+        reference: "Romans 6:23",
+        text: "For the wages of sinne is death: but the gift of God is eternall life, through Iesus Christ our Lord.",
+        doctrine: "passion_of_christ",
+    },
+    // ── 22. Resurrection Appearances and Power ────────────────────────────
+    Verse {
+        reference: "Matthew 28:5-6",
+        text: "And the Angel answered, and said vnto the women, Feare not ye: for I know that ye seeke Iesus, which was crucified. He is not here: for he is risen, as hee said.",
+        doctrine: "resurrection_of_jesus",
+    },
+    Verse {
+        reference: "Luke 24:6",
+        text: "He is not here, but is risen.",
+        doctrine: "resurrection_of_jesus",
+    },
+    Verse {
+        reference: "John 20:27-28",
+        text: "Then saith he to Thomas, Reach hither thy finger, and behold my hands, and reach hither thy hand, and thrust it into my side, and be not faithlesse, but beleeuing. And Thomas answered, and said vnto him, My Lord, and my God.",
+        doctrine: "resurrection_of_jesus",
+    },
+    Verse {
+        reference: "1 Corinthians 15:20",
+        text: "But now is Christ risen from the dead, and become the first fruits of them that slept.",
+        doctrine: "resurrection_of_jesus",
+    },
+    Verse {
+        reference: "1 Corinthians 15:55-57",
+        text: "O death, where is thy sting? O graue, where is thy victorie? The sting of death is sinne: and the strength of sinne is the Law. But thankes be to God, which giueth vs the victorie, through our Lord Iesus Christ.",
+        doctrine: "resurrection_of_jesus",
+    },
+    Verse {
+        reference: "Philippians 3:10",
+        text: "That I may know him, and the power of his resurrection, and the fellowship of his sufferings, being made conformable vnto his death.",
+        doctrine: "resurrection_of_jesus",
+    },
+    // ── 23. Jesus as High Priest and Mediator ─────────────────────────────
+    Verse {
+        reference: "1 Timothy 2:5",
+        text: "For there is one God, and one Mediatour betweene God and men, the man Christ Iesus.",
+        doctrine: "jesus_mediator",
+    },
+    Verse {
+        reference: "Hebrews 4:14-15",
+        text: "Seeing then that wee haue a great high Priest, that is passed into the heauens, Iesus the Sonne of God, let vs hold fast our profession. For wee haue not an high Priest which cannot bee touched with the feeling of our infirmities: but was in all points tempted like as wee are, yet without sinne.",
+        doctrine: "jesus_mediator",
+    },
+    Verse {
+        reference: "Hebrews 7:25",
+        text: "Wherefore hee is able also to saue them to the vttermost, that come vnto God by him, seeing he euer liueth to make intercession for them.",
+        doctrine: "jesus_mediator",
+    },
+    Verse {
+        reference: "Romans 8:34",
+        text: "Who is hee that condemneth? It is Christ that died, yea rather that is risen againe, who is euen at the right hand of God, who also maketh intercession for vs.",
+        doctrine: "jesus_mediator",
+    },
+    Verse {
+        reference: "Hebrews 12:2",
+        text: "Looking vnto Iesus the authour and finisher of our faith, who for the ioy that was set before him, endured the crosse, despising the shame, and is set downe at the right hand of the throne of God.",
+        doctrine: "jesus_mediator",
+    },
+    // ── 24. Jesus as King and Lord ────────────────────────────────────────
+    Verse {
+        reference: "Revelation 19:16",
+        text: "And he hath on his vesture, and on his thigh a name written, KING OF KINGS, AND LORD OF LORDS.",
+        doctrine: "jesus_king",
+    },
+    Verse {
+        reference: "Revelation 5:12",
+        text: "Saying with a loud voyce, Worthy is the Lambe that was slaine, to receiue power, and riches, and wisedome, and strength, and honour, and glory, and blessing.",
+        doctrine: "jesus_king",
+    },
+    Verse {
+        reference: "Matthew 28:18",
+        text: "And Iesus came, and spake vnto them, saying, All power is giuen vnto me in heauen and in earth.",
+        doctrine: "jesus_king",
+    },
+    Verse {
+        reference: "1 Timothy 6:15",
+        text: "Which in his times hee shall shew, who is the blessed and onely Potentate, the King of kings, and Lord of lords.",
+        doctrine: "jesus_king",
+    },
+    Verse {
+        reference: "Acts 2:36",
+        text: "Therefore let all the house of Israel know assuredly, that God hath made that same Iesus whom ye haue crucified, both Lord and Christ.",
+        doctrine: "jesus_king",
+    },
+    // ── 25. The Lamb of God ───────────────────────────────────────────────
+    Verse {
+        reference: "John 1:29",
+        text: "The next day Iohn seeth Iesus comming vnto him, and saith, Behold the Lambe of God, which taketh away the sinne of the world.",
+        doctrine: "lamb_of_god",
+    },
+    Verse {
+        reference: "Revelation 5:5-6",
+        text: "And one of the Elders saith vnto me, Weepe not: behold, the Lyon of the tribe of Iuda, the roote of Dauid, hath preuailed to open the booke. And I beheld, and loe, in the midst of the throne stood a Lambe, as it had beene slaine.",
+        doctrine: "lamb_of_god",
+    },
+    Verse {
+        reference: "1 Peter 1:18-19",
+        text: "Forasmuch as ye know that yee were not redeemed with corruptible things, as siluer and golde, but with the precious blood of Christ, as of a Lambe without blemish and without spot.",
+        doctrine: "lamb_of_god",
+    },
+    Verse {
+        reference: "Revelation 7:17",
+        text: "For the Lambe which is in the midst of the throne, shall feede them, and shall leade them vnto liuing fountaines of waters: and God shall wipe away all teares from their eyes.",
+        doctrine: "lamb_of_god",
+    },
+    // ── 26. Jesus's Prayers ───────────────────────────────────────────────
+    Verse {
+        reference: "John 17:3",
+        text: "And this is life eternall, that they might know thee the onely true God, and Iesus Christ whom thou hast sent.",
+        doctrine: "jesus_prayers",
+    },
+    Verse {
+        reference: "John 17:20-21",
+        text: "Neither pray I for these alone, but for them also which shall beleeue on me through their word: That they all may bee one, as thou Father art in mee, and I in thee, that they also may be one in vs.",
+        doctrine: "jesus_prayers",
+    },
+    // ── 27. Names and Titles of Jesus ─────────────────────────────────────
+    Verse {
+        reference: "Isaiah 9:6b",
+        text: "And his Name shalbe called, Wonderfull, Counsellor, The mightie God, The euerlasting Father, The Prince of peace.",
+        doctrine: "names_of_jesus",
+    },
+    Verse {
+        reference: "Revelation 22:16",
+        text: "I Iesus haue sent mine Angel, to testifie vnto you these things in the Churches. I am the roote and the offspring of Dauid, and the bright and morning starre.",
+        doctrine: "names_of_jesus",
+    },
+    Verse {
+        reference: "Matthew 1:23",
+        text: "Behold, a virgine shalbe with child, and shall bring foorth a sonne, and they shall call his name Emmanuel, which being interpreted, is, God with vs.",
+        doctrine: "names_of_jesus",
+    },
+    Verse {
+        reference: "John 1:36",
+        text: "And looking vpon Iesus as hee walked, hee saith, Behold the Lambe of God.",
+        doctrine: "names_of_jesus",
+    },
+    Verse {
+        reference: "Revelation 22:13",
+        text: "I am Alpha and Omega, the beginning and the end, the first and the last.",
+        doctrine: "names_of_jesus",
+    },
 ];
 
 #[cfg(test)]
@@ -439,8 +814,8 @@ mod tests {
     #[test]
     fn test_verse_count() {
         assert!(
-            VERSES.len() >= 60,
-            "should have at least 60 curated verses, got {}",
+            VERSES.len() >= 140,
+            "should have at least 140 curated verses, got {}",
             VERSES.len()
         );
     }
@@ -499,6 +874,15 @@ mod tests {
             "wisdom",
             "spiritual_warfare",
             "protection",
+            "i_am_statements",
+            "teachings_of_jesus",
+            "messianic_prophecy",
+            "passion_of_christ",
+            "resurrection_of_jesus",
+            "jesus_mediator",
+            "jesus_king",
+            "lamb_of_god",
+            "names_of_jesus",
         ];
 
         for d in &required {
