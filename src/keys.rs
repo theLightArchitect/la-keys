@@ -1,3 +1,4 @@
+use hkdf::Hkdf;
 use hmac::{Hmac, Mac};
 use rand::RngCore;
 use secrecy::{ExposeSecret, SecretString};
@@ -7,6 +8,7 @@ use zeroize::Zeroizing;
 
 use crate::error::{AppError, Result};
 use crate::types::KeyEnvironment;
+use crate::verses::{self, Verse};
 
 type HmacSha256 = Hmac<Sha256>;
 
@@ -22,7 +24,6 @@ const LAST_CHARS_LEN: usize = 4;
 /// Result of key generation — the raw key (shown once) and its hash (stored).
 pub struct GeneratedKey {
     /// The full API key string, shown to the user exactly once.
-    /// Format: `lak_{env}_{base62(32 random bytes)}{base62(crc32)}`
     pub raw_key: SecretString,
     /// HMAC-SHA256 hash of the raw key, hex-encoded. Stored in the database.
     pub key_hash: String,
@@ -30,6 +31,10 @@ pub struct GeneratedKey {
     pub prefix: String,
     /// Last 4 characters of the full key string.
     pub last_four: String,
+    /// The Bible verse used in HKDF derivation — cryptographically bound to this key.
+    pub verse_ref: String,
+    /// The full verse text (1611 KJV).
+    pub verse_text: String,
 }
 
 /// Generate a new API key with cryptographic randomness.
@@ -40,12 +45,33 @@ pub struct GeneratedKey {
 /// - Body = base62-encoded 32 bytes of CSPRNG randomness
 /// - Checksum = base62-encoded CRC32 of the body (client-side validation)
 pub fn generate_key(env: KeyEnvironment, pepper: &SecretString) -> Result<GeneratedKey> {
+    // Auto-assign a Bible verse — used as HKDF context
+    let verse = verses::random_verse();
+    generate_key_with_verse(env, pepper, verse)
+}
+
+/// Generate a key with a specific Bible verse as the HKDF context.
+/// The verse is cryptographically bound to the key via HKDF-SHA256.
+pub fn generate_key_with_verse(
+    env: KeyEnvironment,
+    pepper: &SecretString,
+    verse: &Verse,
+) -> Result<GeneratedKey> {
     // Generate 32 bytes of cryptographic randomness (256 bits)
     let mut random_bytes = Zeroizing::new([0u8; KEY_RANDOM_BYTES]);
     rand::thread_rng().fill_bytes(random_bytes.as_mut());
 
-    // Base62-encode as two u128 halves (the crate only accepts Into<u128>)
-    let (first_half, second_half) = random_bytes.split_at(16);
+    // HKDF: derive key material using the verse as context
+    // Extract: HKDF-Extract(salt=pepper, ikm=random_bytes) → PRK
+    // Expand:  HKDF-Expand(prk=PRK, info=verse_context) → 32 bytes
+    let hkdf_info = verses::verse_hkdf_info(verse);
+    let hk = Hkdf::<Sha256>::new(Some(pepper.expose_secret().as_bytes()), &random_bytes[..]);
+    let mut derived = [0u8; KEY_RANDOM_BYTES];
+    hk.expand(hkdf_info.as_bytes(), &mut derived)
+        .map_err(|e| AppError::Internal(format!("HKDF expand failed: {e}")))?;
+
+    // Base62-encode the derived bytes as two u128 halves
+    let (first_half, second_half) = derived.split_at(16);
     let n1 = u128::from_be_bytes(first_half.try_into().expect("16 bytes"));
     let n2 = u128::from_be_bytes(second_half.try_into().expect("16 bytes"));
     let body = format!("{}{}", base62::encode(n1), base62::encode(n2));
@@ -79,6 +105,8 @@ pub fn generate_key(env: KeyEnvironment, pepper: &SecretString) -> Result<Genera
         key_hash,
         prefix,
         last_four,
+        verse_ref: verse.reference.to_string(),
+        verse_text: verse.text.to_string(),
     })
 }
 

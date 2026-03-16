@@ -34,6 +34,8 @@ pub struct CreateKeyResponse {
     pub prefix: String,
     pub environment: String,
     pub scopes: Vec<String>,
+    pub verse: String,
+    pub verse_text: String,
     pub warning: &'static str,
 }
 
@@ -115,6 +117,8 @@ pub async fn create_key(
         prefix: info.prefix,
         environment: environment.as_str().to_string(),
         scopes: req.scopes,
+        verse: generated.verse_ref,
+        verse_text: generated.verse_text,
         warning: "Store this key securely. It will not be shown again.",
     };
 
@@ -161,6 +165,8 @@ pub async fn rotate_key(
         prefix: info.prefix,
         environment: info.environment.as_str().to_string(),
         scopes,
+        verse: generated.verse_ref,
+        verse_text: generated.verse_text,
         warning: "Store this key securely. It will not be shown again. The previous key will remain valid during the grace period.",
     };
 

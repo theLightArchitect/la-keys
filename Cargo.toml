@@ -21,9 +21,10 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 toml = "0.8"
 
-# Crypto — HMAC-SHA256 for key hashing (NOT argon2 — keys have sufficient entropy)
+# Crypto — HMAC-SHA256 for key hashing, HKDF for verse-based key derivation
 hmac = "0.12"
 sha2 = "0.10"
+hkdf = "0.12"
 ring = "0.17"
 
 # JWT

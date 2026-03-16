@@ -12,6 +12,8 @@ mod repo;
 #[allow(dead_code)]
 mod types;
 #[allow(dead_code)]
+mod verses;
+#[allow(dead_code)]
 mod webhooks;
 
 use std::sync::Arc;
