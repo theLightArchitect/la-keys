@@ -34,6 +34,31 @@ pub struct AppState {
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    // Handle subcommands before initializing the server
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() > 1 {
+        match args[1].as_str() {
+            "init" => {
+                config::run_init().map_err(|e| anyhow::anyhow!("init error: {e}"))?;
+                return Ok(());
+            }
+            "help" | "--help" | "-h" => {
+                println!("L-ARC API Key Service\n");
+                println!("Usage: larc-api-keys [command]\n");
+                println!("Commands:");
+                println!("  init    First-time setup wizard (choose secret storage backend)");
+                println!("  help    Show this help message");
+                println!("\nWithout a command, starts the HTTP server on port 3800.");
+                return Ok(());
+            }
+            other => {
+                eprintln!("Unknown command: {other}");
+                eprintln!("Run `larc-api-keys help` for usage.");
+                std::process::exit(1);
+            }
+        }
+    }
+
     // Initialize structured logging
     tracing_subscriber::fmt()
         .with_env_filter(
@@ -42,7 +67,7 @@ async fn main() -> anyhow::Result<()> {
         .json()
         .init();
 
-    // Load configuration from environment
+    // Load configuration from environment + secrets backend
     let config = Config::from_env().map_err(|e| anyhow::anyhow!("config error: {e}"))?;
 
     // Ensure database directory exists with secure permissions
