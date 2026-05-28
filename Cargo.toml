@@ -1,9 +1,15 @@
 [package]
-name = "larc-api-keys"
+name = "la-keys"
 version = "0.1.0"
 edition = "2024"
-description = "L-ARC API Key Service — secure API key management for the Light Architects platform"
-authors = ["KFT <kft@lightarchitects.io>"]
+description = "API key management service for the Light Architects platform — Axum + SQLite + JWT with three-tier auth, verse-derived keys, and webhook event notifications"
+authors = ["Kevin Francis Tan <kevinfrancis.tan@gmail.com>"]
+license = "Apache-2.0"
+repository = "https://github.com/theLightArchitect/la-keys"
+homepage = "https://github.com/theLightArchitect/lightarchitects-platform"
+keywords = ["api-key", "auth", "axum", "jwt", "mcp"]
+categories = ["authentication", "web-programming::http-server"]
+readme = "README.md"
 
 [dependencies]
 # Web framework

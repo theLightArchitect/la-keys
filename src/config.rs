@@ -8,6 +8,8 @@ use serde::{Deserialize, Serialize};
 /// Default secrets file location.
 const SECRETS_PATH: &str = ".larc/secrets.toml";
 /// Keychain service name for L-ARC secrets.
+/// NOTE: legacy identifier "larc-api-keys" preserved here — macOS Keychain entries
+/// already written under this name would be orphaned by a rename.
 const KEYCHAIN_SERVICE: &str = "larc-api-keys";
 
 /// Application configuration, loaded from env vars + secrets file + keychain.
@@ -38,7 +40,7 @@ pub struct SecretsFile {
     pub jwt_secret: String,
 }
 
-/// Where secrets are stored — chosen during `larc-api-keys init`.
+/// Where secrets are stored — chosen during `la-keys init`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum SecretBackend {
@@ -370,7 +372,7 @@ pub fn save_settings(settings: &LarcSettings) -> Result<(), ConfigError> {
 // ─── Init Command ─────────────────────────────────────────────────────────────
 
 /// Run the first-time initialization wizard.
-/// Called via `larc-api-keys init`.
+/// Called via `la-keys init`.
 pub fn run_init() -> Result<(), ConfigError> {
     println!("L-ARC API Key Service — First-Time Setup\n");
 
@@ -440,7 +442,7 @@ pub fn run_init() -> Result<(), ConfigError> {
     };
     save_settings(&settings)?;
 
-    println!("\nSetup complete. Run `larc-api-keys` to start the service.");
+    println!("\nSetup complete. Run `la-keys` to start the service.");
     Ok(())
 }
 

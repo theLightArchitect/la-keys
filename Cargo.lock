@@ -742,7 +742,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "larc-api-keys"
+name = "la-keys"
 version = "0.1.0"
 dependencies = [
  "anyhow",

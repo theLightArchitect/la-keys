@@ -46,7 +46,7 @@ async fn main() -> anyhow::Result<()> {
             }
             "help" | "--help" | "-h" => {
                 println!("L-ARC API Key Service\n");
-                println!("Usage: larc-api-keys [command]\n");
+                println!("Usage: la-keys [command]\n");
                 println!("Commands:");
                 println!("  init    First-time setup wizard (choose secret storage backend)");
                 println!("  help    Show this help message");
@@ -55,7 +55,7 @@ async fn main() -> anyhow::Result<()> {
             }
             other => {
                 eprintln!("Unknown command: {other}");
-                eprintln!("Run `larc-api-keys help` for usage.");
+                eprintln!("Run `la-keys help` for usage.");
                 std::process::exit(1);
             }
         }
