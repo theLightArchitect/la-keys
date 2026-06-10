@@ -52,6 +52,8 @@ pub fn generate_key(env: KeyEnvironment, pepper: &SecretString) -> Result<Genera
 
 /// Generate a key with a specific Bible verse as the HKDF context.
 /// The verse is cryptographically bound to the key via HKDF-SHA256.
+// WHY: reserved for verse-pinned issuance endpoint (caller chooses the verse)
+#[allow(dead_code)]
 pub fn generate_key_with_verse(
     env: KeyEnvironment,
     pepper: &SecretString,
@@ -139,6 +141,8 @@ pub fn hash_key(raw_key: &str, pepper: &SecretString) -> Result<String> {
 /// Uses `subtle::ConstantTimeEq` to prevent timing-oracle attacks.
 /// LTO (`lto = true`) cannot eliminate the constant-time guarantee because
 /// subtle marks the inner loop with compiler barriers.
+// WHY: used in unit tests; reserved for future verify-endpoint that bypasses hash lookup
+#[allow(dead_code)]
 pub fn verify_key(raw_key: &str, stored_hash: &str, pepper: &SecretString) -> Result<bool> {
     let computed_hash = hash_key(raw_key, pepper)?;
     // ct_eq returns Choice(0) on length mismatch without leaking the lengths.
@@ -149,6 +153,8 @@ pub fn verify_key(raw_key: &str, stored_hash: &str, pepper: &SecretString) -> Re
 
 /// Validate the format of a raw API key.
 /// Returns the environment if valid.
+// WHY: reserved for client-side SDK prefix validation
+#[allow(dead_code)]
 pub fn parse_key_prefix(raw_key: &str) -> Option<KeyEnvironment> {
     if raw_key.starts_with("lak_live_") {
         Some(KeyEnvironment::Live)
@@ -161,6 +167,8 @@ pub fn parse_key_prefix(raw_key: &str) -> Option<KeyEnvironment> {
 
 /// Validate the CRC32 checksum embedded in the key (client-side validation).
 /// Returns true if the checksum matches, false otherwise.
+// WHY: reserved for client-side SDK checksum verification
+#[allow(dead_code)]
 pub fn validate_key_checksum(raw_key: &str) -> bool {
     // Extract environment prefix length
     let prefix_len = if raw_key.starts_with("lak_live_") {

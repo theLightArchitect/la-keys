@@ -108,6 +108,8 @@ pub struct Scope {
 }
 
 impl Scope {
+    // WHY: used in tests and reserved for SDK scope construction
+    #[allow(dead_code)]
     #[must_use]
     pub fn new(service: ServiceName, permission: Permission) -> Self {
         Self {
@@ -197,6 +199,8 @@ impl std::fmt::Display for KeyStatus {
 
 // ─── Core Data Models ─────────────────────────────────────────────────────────
 
+// WHY: reserved for user management endpoints (GET /users, etc.)
+#[allow(dead_code)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct User {
     pub id: Uuid,
@@ -207,6 +211,8 @@ pub struct User {
     pub updated_at: DateTime<Utc>,
 }
 
+// WHY: reserved for tier-based rate-limit and billing endpoints
+#[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum UserTier {
@@ -215,6 +221,7 @@ pub enum UserTier {
     Unlimited,
 }
 
+#[allow(dead_code)]
 impl UserTier {
     /// Requests per minute for this tier.
     #[must_use]

@@ -18,11 +18,15 @@ use crate::types::Scope;
 #[derive(Debug, Clone)]
 pub struct AdminPrincipal {
     pub user_id: Uuid,
+    // WHY: captured at login for audit logs and future profile endpoints
+    #[allow(dead_code)]
     pub email: String,
 }
 
 /// API key principal — extracted from `lak_*` Bearer tokens.
 /// Used for API endpoints that consume services.
+// WHY: reserved for key-bearer endpoint extractor (POST /api/v1/auth/token not yet wired)
+#[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub struct ApiKeyPrincipal {
     pub user_id: Uuid,
@@ -31,6 +35,7 @@ pub struct ApiKeyPrincipal {
     pub deprecated: bool,
 }
 
+#[allow(dead_code)]
 impl ApiKeyPrincipal {
     /// Check if this principal has the required scope.
     #[must_use]

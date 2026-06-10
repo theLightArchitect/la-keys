@@ -7,6 +7,8 @@ use rand::seq::SliceRandom;
 pub struct Verse {
     pub reference: &'static str,
     pub text: &'static str,
+    // WHY: doctrine tag reserved for verse-browsing filters (e.g. ?doctrine=trinity)
+    #[allow(dead_code)]
     pub doctrine: &'static str,
 }
 
@@ -19,6 +21,8 @@ pub fn random_verse() -> &'static Verse {
 }
 
 /// Get a verse by its reference string (e.g., "John 3:16").
+// WHY: reserved for verse-browsing endpoint
+#[allow(dead_code)]
 #[must_use]
 pub fn find_verse(reference: &str) -> Option<&'static Verse> {
     VERSES.iter().find(|v| v.reference == reference)

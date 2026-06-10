@@ -1,3 +1,7 @@
+// WHY: all webhook delivery code is reserved for post-alpha fanout;
+// no endpoint wires these functions yet.
+#![allow(dead_code)]
+
 use std::net::IpAddr;
 use std::time::Duration;
 

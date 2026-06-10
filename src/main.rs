@@ -1,28 +1,14 @@
-// WHY: ApiKeyPrincipal + bearer-auth extractors reserved for the production
-// auth flow (POST /api/v1/auth/login + key-bearer endpoints).
-#[allow(dead_code)]
 mod auth;
 mod cli_create_admin;
 mod config;
 mod db;
 mod error;
 mod handlers;
-// WHY: generate_key_with_verse is pub for verse-pinned issuance (future API).
-// validate_key_checksum + parse_key_prefix are unused pending client SDK.
-#[allow(dead_code)]
 mod keys;
 mod rate_limit;
 mod repo;
-// WHY: KeyStatus variants (Deprecated/Revoked) + ApiKeyPrincipal reserved for
-// key-status endpoints and bearer-auth extractor.
-#[allow(dead_code)]
 mod types;
-// WHY: verse_hkdf_info is used by keys.rs; other verse helpers are reserved
-// for the verse-browsing endpoint.
-#[allow(dead_code)]
 mod verses;
-// WHY: WebhookDispatcher + delivery loop reserved for post-alpha webhook fanout.
-#[allow(dead_code)]
 mod webhooks;
 
 use std::sync::Arc;
