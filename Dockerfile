@@ -1,16 +1,16 @@
 # syntax=docker/dockerfile:1.7
 #
-# Multi-stage build for the la-keys service.
+# Multi-stage build for the larc-keys service.
 # Final image: ~18 MB distroless cc-debian12 (nonroot user).
 #
-# Build:   docker build -t la-keys .
+# Build:   docker build -t larc-keys .
 # Run:     docker run --rm -p 3800:3800 \
-#              -v la_keys_data:/data \
+#              -v larc_keys_data:/data \
 #              -e LARC_ENV=production \
 #              -e LARC_HMAC_PEPPER=... \
 #              -e LARC_JWT_SECRET=... \
 #              -e LARC_DATABASE_PATH=/data/larc.db \
-#              la-keys
+#              larc-keys
 
 # ─── Stage 1: build ────────────────────────────────────────────────────────
 FROM rust:1.87-bookworm-slim AS build
@@ -38,14 +38,14 @@ COPY README.md ./
 
 RUN --mount=type=cache,target=/usr/local/cargo/registry \
     --mount=type=cache,target=/work/target \
-    cargo build --release --bin la-keys \
-    && cp target/release/la-keys /work/la-keys
+    cargo build --release --bin larc-keys \
+    && cp target/release/larc-keys /work/larc-keys
 
 # ─── Stage 2: runtime ──────────────────────────────────────────────────────
 FROM gcr.io/distroless/cc-debian12:nonroot
 
 WORKDIR /app
-COPY --from=build /work/la-keys /app/la-keys
+COPY --from=build /work/larc-keys /app/larc-keys
 
 # `:nonroot` distroless image runs as uid 65532.  The mounted volume must be
 # writable by that uid — see fly.toml `[mounts]` section for the production
@@ -54,4 +54,4 @@ ENV LARC_DATABASE_PATH=/data/larc.db
 EXPOSE 3800
 USER nonroot:nonroot
 
-ENTRYPOINT ["/app/la-keys"]
+ENTRYPOINT ["/app/larc-keys"]

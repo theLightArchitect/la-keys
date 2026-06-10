@@ -65,18 +65,18 @@ async fn main() -> anyhow::Result<()> {
             }
             "help" | "--help" | "-h" => {
                 println!("L-ARC API Key Service\n");
-                println!("Usage: la-keys [command]\n");
+                println!("Usage: larc-keys [command]\n");
                 println!("Commands:");
                 println!("  init           First-time setup wizard (choose secret storage backend)");
                 println!("  create-admin   Bootstrap the first admin row in `users`");
-                println!("                 (la-keys create-admin --email <e> [--name <n>])");
+                println!("                 (larc-keys create-admin --email <e> [--name <n>])");
                 println!("  help           Show this help message");
                 println!("\nWithout a command, starts the HTTP server on port 3800.");
                 return Ok(());
             }
             other => {
                 eprintln!("Unknown command: {other}");
-                eprintln!("Run `la-keys help` for usage.");
+                eprintln!("Run `larc-keys help` for usage.");
                 std::process::exit(1);
             }
         }

@@ -1,4 +1,4 @@
-//! `la-keys create-admin` subcommand.
+//! `larc-keys create-admin` subcommand.
 //!
 //! Seeds the first row in the `users` table so the admin-gated key APIs
 //! (`POST /api/v1/keys`, etc.) have a JWT-bearing principal to authenticate as.
@@ -77,7 +77,7 @@ fn parse_args(argv: &[String]) -> Result<Args, String> {
 }
 
 fn usage() -> String {
-    "Usage: la-keys create-admin --email <e> [--name <n>]\n\
+    "Usage: larc-keys create-admin --email <e> [--name <n>]\n\
      \n\
      Bootstraps the first admin row in `users`.  Password is prompted twice.\n\
      Prints the new user UUID + a 7-day JWT to stdout on success.\n"

@@ -1,8 +1,8 @@
-# fly.toml — la-keys on Fly.io with a persistent volume backing SQLite.
+# fly.toml — larc-keys on Fly.io with a persistent volume backing SQLite.
 #
 # Deploy from this directory:
-#   flyctl apps create la-keys
-#   flyctl volumes create la_keys_data --region iad --size 1
+#   flyctl apps create larc-keys
+#   flyctl volumes create larc_keys_data --region iad --size 1
 #   flyctl secrets set \
 #       LARC_ENV=production \
 #       LARC_HMAC_PEPPER="$(openssl rand -hex 32)" \
@@ -10,13 +10,13 @@
 #   flyctl deploy
 #
 # Bootstrap the first admin (one-shot, via `flyctl ssh console`):
-#   flyctl ssh console -a la-keys
-#   /app/la-keys create-admin --email kft@lightarchitects.io
+#   flyctl ssh console -a larc-keys
+#   /app/larc-keys create-admin --email kft@lightarchitects.io
 #
 # Once Fly health checks are green, point DNS for keys.lightarchitects.ai at
 # Fly's anycast (see `flyctl ips list`).
 
-app = "la-keys"
+app = "larc-keys"
 primary_region = "iad"
 
 [build]
@@ -34,7 +34,7 @@ primary_region = "iad"
 # redeploys.  Single-machine semantics; do NOT scale machines >1 against a
 # single volume (SQLite is single-writer).
 [mounts]
-  source = "la_keys_data"
+  source = "larc_keys_data"
   destination = "/data"
   initial_size = "1gb"
 

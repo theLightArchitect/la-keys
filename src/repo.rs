@@ -415,11 +415,11 @@ fn parse_datetime(s: &str) -> Result<DateTime<Utc>> {
 
 // ── users ────────────────────────────────────────────────────────────────────
 //
-// la-keys' `POST /api/v1/keys` endpoint is `AdminPrincipal`-gated (JWT) — the
+// larc-keys' `POST /api/v1/keys` endpoint is `AdminPrincipal`-gated (JWT) — the
 // JWT carries the `user_id` of the admin issuing the key.  The schema therefore
 // requires at least one row in `users` before any key can be issued.
 //
-// The functions below give the `la-keys create-admin` CLI a typed insertion
+// The functions below give the `larc-keys create-admin` CLI a typed insertion
 // path so the bootstrap user can be seeded out-of-band without raw SQL.
 
 /// Lookup an existing user by email.  Returns `Ok(None)` when no row matches.
