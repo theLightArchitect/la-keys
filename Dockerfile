@@ -42,16 +42,19 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry \
     && cp target/release/larc-keys /work/larc-keys
 
 # ─── Stage 2: runtime ──────────────────────────────────────────────────────
-FROM gcr.io/distroless/cc-debian12:nonroot
+# debian:bookworm-slim (not distroless) so `fly ssh console` has a shell.
+FROM debian:bookworm-slim
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 COPY --from=build /work/larc-keys /app/larc-keys
 
-# `:nonroot` distroless image runs as uid 65532.  The mounted volume must be
-# writable by that uid — see fly.toml `[mounts]` section for the production
-# wiring, and docker-compose for local parity.
+# Runs as root inside Fly's VM — Fly provides VM-level isolation.
+# Volume /data is mounted root-owned; running non-root would require chown.
 ENV LARC_DATABASE_PATH=/data/larc.db
 EXPOSE 3800
-USER nonroot:nonroot
 
 ENTRYPOINT ["/app/larc-keys"]
