@@ -31,10 +31,9 @@ toml = "0.8"
 hmac = "0.12"
 sha2 = "0.10"
 hkdf = "0.12"
-ring = "0.17"
 
 # JWT
-jsonwebtoken = "9"
+jsonwebtoken = { version = "10", features = ["rust_crypto"] }
 
 # Password hashing — Argon2id for admin user passwords in `users.password_hash`
 argon2 = "0.5"
