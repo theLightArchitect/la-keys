@@ -1,5 +1,10 @@
+// `auth::ApiKeyPrincipal` + a few admin fields are reserved for endpoints that
+// will land alongside the production auth flow.  Keep the suppression scoped
+// to the existing dead code; the new bootstrap helpers (generate_jwt) are
+// actively used by `cli_create_admin::run`.
 #[allow(dead_code)]
 mod auth;
+mod cli_create_admin;
 mod config;
 mod db;
 mod error;
@@ -44,12 +49,28 @@ async fn main() -> anyhow::Result<()> {
                 config::run_init().map_err(|e| anyhow::anyhow!("init error: {e}"))?;
                 return Ok(());
             }
+            "create-admin" => {
+                // Initialize logging first so the bootstrap path emits structured
+                // events too — useful when the operator runs the CLI inside a
+                // container and `tracing-subscriber` is the only sink.
+                tracing_subscriber::fmt()
+                    .with_env_filter(
+                        EnvFilter::try_from_default_env()
+                            .unwrap_or_else(|_| EnvFilter::new("info")),
+                    )
+                    .json()
+                    .init();
+                cli_create_admin::run().await?;
+                return Ok(());
+            }
             "help" | "--help" | "-h" => {
                 println!("L-ARC API Key Service\n");
                 println!("Usage: la-keys [command]\n");
                 println!("Commands:");
-                println!("  init    First-time setup wizard (choose secret storage backend)");
-                println!("  help    Show this help message");
+                println!("  init           First-time setup wizard (choose secret storage backend)");
+                println!("  create-admin   Bootstrap the first admin row in `users`");
+                println!("                 (la-keys create-admin --email <e> [--name <n>])");
+                println!("  help           Show this help message");
                 println!("\nWithout a command, starts the HTTP server on port 3800.");
                 return Ok(());
             }
