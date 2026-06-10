@@ -1,11 +1,11 @@
 [package]
-name = "la-keys"
+name = "larc-keys"
 version = "0.1.0"
 edition = "2024"
 description = "API key management service for the Light Architects platform — Axum + SQLite + JWT with three-tier auth, verse-derived keys, and webhook event notifications"
 authors = ["Kevin Francis Tan <kevinfrancis.tan@gmail.com>"]
 license = "Apache-2.0"
-repository = "https://github.com/theLightArchitect/la-keys"
+repository = "https://github.com/TheLightArchitects/larc-keys"
 homepage = "https://github.com/theLightArchitect/lightarchitects-platform"
 keywords = ["api-key", "auth", "axum", "jwt", "mcp"]
 categories = ["authentication", "web-programming::http-server"]
@@ -35,6 +35,12 @@ ring = "0.17"
 
 # JWT
 jsonwebtoken = "9"
+
+# Password hashing — Argon2id for admin user passwords in `users.password_hash`
+argon2 = "0.5"
+
+# Interactive password prompt for the `create-admin` CLI subcommand
+rpassword = "7"
 
 # Key generation
 rand = "0.8"

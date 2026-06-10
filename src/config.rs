@@ -40,7 +40,7 @@ pub struct SecretsFile {
     pub jwt_secret: String,
 }
 
-/// Where secrets are stored — chosen during `la-keys init`.
+/// Where secrets are stored — chosen during `larc-keys init`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum SecretBackend {
@@ -372,7 +372,7 @@ pub fn save_settings(settings: &LarcSettings) -> Result<(), ConfigError> {
 // ─── Init Command ─────────────────────────────────────────────────────────────
 
 /// Run the first-time initialization wizard.
-/// Called via `la-keys init`.
+/// Called via `larc-keys init`.
 pub fn run_init() -> Result<(), ConfigError> {
     println!("L-ARC API Key Service — First-Time Setup\n");
 
@@ -442,7 +442,7 @@ pub fn run_init() -> Result<(), ConfigError> {
     };
     save_settings(&settings)?;
 
-    println!("\nSetup complete. Run `la-keys` to start the service.");
+    println!("\nSetup complete. Run `larc-keys` to start the service.");
     Ok(())
 }
 

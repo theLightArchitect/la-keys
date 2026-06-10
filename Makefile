@@ -1,7 +1,7 @@
 # L-ARC API Key Service — Makefile
 # Standard targets matching Light Architects ecosystem
 
-BINARY_NAME := larc-api-keys
+BINARY_NAME := larc-keys
 DEPLOY_DIR := $(HOME)/.larc
 DEPLOY_BIN := $(DEPLOY_DIR)/bin/$(BINARY_NAME)
 

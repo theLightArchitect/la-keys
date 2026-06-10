@@ -412,3 +412,64 @@ fn parse_datetime(s: &str) -> Result<DateTime<Utc>> {
         .map(|dt| dt.with_timezone(&Utc))
         .map_err(|e| AppError::Internal(format!("invalid datetime: {e}")))
 }
+
+// ── users ────────────────────────────────────────────────────────────────────
+//
+// larc-keys' `POST /api/v1/keys` endpoint is `AdminPrincipal`-gated (JWT) — the
+// JWT carries the `user_id` of the admin issuing the key.  The schema therefore
+// requires at least one row in `users` before any key can be issued.
+//
+// The functions below give the `larc-keys create-admin` CLI a typed insertion
+// path so the bootstrap user can be seeded out-of-band without raw SQL.
+
+/// Lookup an existing user by email.  Returns `Ok(None)` when no row matches.
+pub async fn find_user_by_email(db: &Database, email: &str) -> Result<Option<Uuid>> {
+    let conn = db.conn().await;
+    let row: Option<String> = conn
+        .query_row(
+            "SELECT id FROM users WHERE email = ?1 LIMIT 1",
+            [email],
+            |row| row.get(0),
+        )
+        .map(Some)
+        .or_else(|e| {
+            if matches!(e, rusqlite::Error::QueryReturnedNoRows) {
+                Ok(None)
+            } else {
+                Err(e)
+            }
+        })?;
+    match row {
+        Some(s) => Ok(Some(parse_uuid(&s)?)),
+        None => Ok(None),
+    }
+}
+
+/// Insert a new user with the given email + name + pre-hashed password.
+///
+/// Returns the freshly-minted user UUID.  Fails with `AppError::Conflict` when
+/// a row with the same email already exists (UNIQUE constraint on `users.email`).
+pub async fn create_user(
+    db: &Database,
+    email: &str,
+    name: &str,
+    password_hash: &str,
+) -> Result<Uuid> {
+    let conn = db.conn().await;
+    let user_id = Uuid::new_v4();
+    let result = conn.execute(
+        "INSERT INTO users (id, email, name, password_hash) VALUES (?1, ?2, ?3, ?4)",
+        rusqlite::params![user_id.to_string(), email, name, password_hash],
+    );
+    match result {
+        Ok(_) => Ok(user_id),
+        Err(rusqlite::Error::SqliteFailure(err, _))
+            if err.code == rusqlite::ErrorCode::ConstraintViolation =>
+        {
+            Err(AppError::Conflict(format!(
+                "user with email `{email}` already exists"
+            )))
+        }
+        Err(e) => Err(e.into()),
+    }
+}
