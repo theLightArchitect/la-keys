@@ -13,7 +13,7 @@
 #              larc-keys
 
 # ─── Stage 1: build ────────────────────────────────────────────────────────
-FROM rust:1.87-bookworm-slim AS build
+FROM rust:1.88-slim-bookworm AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential pkg-config libssl-dev \
