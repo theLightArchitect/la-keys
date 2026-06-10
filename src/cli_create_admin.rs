@@ -23,6 +23,7 @@ use argon2::{
     password_hash::{PasswordHasher, SaltString, rand_core::OsRng},
 };
 use secrecy::ExposeSecret;
+use zeroize::Zeroizing;
 
 use crate::auth::generate_jwt;
 use crate::config::Config;
@@ -95,18 +96,23 @@ fn hash_password(plain: &str) -> Result<String, String> {
 }
 
 /// Prompt for a password twice via `rpassword`; return it once both match.
-fn prompt_password() -> Result<String, String> {
-    let p1 = rpassword::prompt_password("New admin password: ")
-        .map_err(|e| format!("password prompt failed: {e}"))?;
+/// Returns `Zeroizing<String>` so the plaintext is overwritten on drop.
+fn prompt_password() -> Result<Zeroizing<String>, String> {
+    let p1 = Zeroizing::new(
+        rpassword::prompt_password("New admin password: ")
+            .map_err(|e| format!("password prompt failed: {e}"))?,
+    );
     if p1.trim().is_empty() {
         return Err("password must not be empty".into());
     }
     if p1.len() < 12 {
         return Err("password must be at least 12 characters".into());
     }
-    let p2 = rpassword::prompt_password("Confirm admin password: ")
-        .map_err(|e| format!("password prompt failed: {e}"))?;
-    if p1 != p2 {
+    let p2 = Zeroizing::new(
+        rpassword::prompt_password("Confirm admin password: ")
+            .map_err(|e| format!("password prompt failed: {e}"))?,
+    );
+    if *p1 != *p2 {
         return Err("passwords do not match".into());
     }
     Ok(p1)
@@ -135,8 +141,7 @@ pub async fn run() -> anyhow::Result<()> {
 
     let password = prompt_password().map_err(anyhow::Error::msg)?;
     let hash = hash_password(&password).map_err(anyhow::Error::msg)?;
-    // Best-effort scrubbing: drop the plaintext binding immediately.
-    drop(password);
+    // `password` is Zeroizing<String> — plaintext is overwritten on drop here.
 
     let user_id = repo::create_user(&database, &cli.email, &cli.name, &hash)
         .await

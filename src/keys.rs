@@ -3,7 +3,7 @@ use hmac::{Hmac, Mac};
 use rand::RngCore;
 use secrecy::{ExposeSecret, SecretString};
 use sha2::Sha256;
-#[allow(unused_imports)]
+use subtle::ConstantTimeEq;
 use zeroize::Zeroizing;
 
 use crate::error::{AppError, Result};
@@ -63,6 +63,9 @@ pub fn generate_key_with_verse(
 
     // HKDF: derive key material using the verse as context
     // Extract: HKDF-Extract(salt=pepper, ikm=random_bytes) → PRK
+    //   WHY pepper-as-salt: embedding the server secret in the extraction step
+    //   means the PRK is unrecoverable without pepper even if random_bytes
+    //   leaks. Stronger than pepper-as-info, which only affects expansion.
     // Expand:  HKDF-Expand(prk=PRK, info=verse_context) → 32 bytes
     let hkdf_info = verses::verse_hkdf_info(verse);
     let hk = Hkdf::<Sha256>::new(Some(pepper.expose_secret().as_bytes()), &random_bytes[..]);
@@ -72,8 +75,16 @@ pub fn generate_key_with_verse(
 
     // Base62-encode the derived bytes as two u128 halves
     let (first_half, second_half) = derived.split_at(16);
-    let n1 = u128::from_be_bytes(first_half.try_into().expect("16 bytes"));
-    let n2 = u128::from_be_bytes(second_half.try_into().expect("16 bytes"));
+    let n1 = u128::from_be_bytes(
+        first_half
+            .try_into()
+            .map_err(|_| AppError::Internal("HKDF output length invariant violated".into()))?,
+    );
+    let n2 = u128::from_be_bytes(
+        second_half
+            .try_into()
+            .map_err(|_| AppError::Internal("HKDF output length invariant violated".into()))?,
+    );
     let body = format!("{}{}", base62::encode(n1), base62::encode(n2));
 
     // CRC32 checksum of the body for client-side validation (GitHub pattern)
@@ -125,25 +136,15 @@ pub fn hash_key(raw_key: &str, pepper: &SecretString) -> Result<String> {
 
 /// Verify a raw API key against a stored hash.
 ///
-/// Uses constant-time comparison (via HMAC verify) to prevent timing attacks.
+/// Uses `subtle::ConstantTimeEq` to prevent timing-oracle attacks.
+/// LTO (`lto = true`) cannot eliminate the constant-time guarantee because
+/// subtle marks the inner loop with compiler barriers.
 pub fn verify_key(raw_key: &str, stored_hash: &str, pepper: &SecretString) -> Result<bool> {
     let computed_hash = hash_key(raw_key, pepper)?;
-
-    // Constant-time comparison to prevent timing attacks.
-    // Both hashes are hex strings of the same HMAC output, so same length.
-    let computed_bytes = computed_hash.as_bytes();
-    let stored_bytes = stored_hash.as_bytes();
-
-    if computed_bytes.len() != stored_bytes.len() {
-        return Ok(false);
-    }
-
-    // XOR-based constant-time comparison
-    let mut diff = 0u8;
-    for (a, b) in computed_bytes.iter().zip(stored_bytes.iter()) {
-        diff |= a ^ b;
-    }
-    Ok(diff == 0)
+    // ct_eq returns Choice(0) on length mismatch without leaking the lengths.
+    Ok(bool::from(
+        computed_hash.as_bytes().ct_eq(stored_hash.as_bytes()),
+    ))
 }
 
 /// Validate the format of a raw API key.

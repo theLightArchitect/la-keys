@@ -1,6 +1,6 @@
 use axum::Json;
 use axum::extract::{Path, State};
-use axum::http::StatusCode;
+use axum::http::{HeaderMap, StatusCode};
 use axum::response::IntoResponse;
 use secrecy::ExposeSecret;
 use serde::{Deserialize, Serialize};
@@ -185,11 +185,25 @@ pub async fn revoke_key(
 
 /// POST /api/v1/keys/verify — verify an API key.
 ///
-/// This endpoint accepts unauthenticated requests (service-to-service validation).
+/// Unauthenticated (service-to-service). Rate-limited per IP: 30 req / 60 s.
+/// Fly.io sets `fly-client-ip`; `x-forwarded-for` is the fallback for local dev.
 pub async fn verify_key_handler(
     State(state): State<AppState>,
+    headers: HeaderMap,
     Json(req): Json<VerifyKeyRequest>,
 ) -> Result<Json<VerifyKeyResponse>> {
+    let ip = headers
+        .get("fly-client-ip")
+        .or_else(|| headers.get("x-forwarded-for"))
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("unknown");
+    let rl = state.rate_limiter.check_ip(ip, 30).await;
+    if !rl.allowed {
+        return Err(crate::error::AppError::RateLimited {
+            retry_after_secs: rl.retry_after_secs.unwrap_or(60),
+        });
+    }
+
     let result = repo::verify_api_key(&state.db, &req.key, &state.config.hmac_pepper).await?;
 
     match result {

@@ -124,9 +124,10 @@ pub async fn list_keys(db: &Database, user_id: Uuid) -> Result<Vec<ApiKeyInfo>> 
                 revoked_at: row.get(11)?,
             })
         })?
-        .filter_map(std::result::Result::ok)
-        .filter_map(|row| row_to_info(&conn, row).ok())
-        .collect();
+        .collect::<rusqlite::Result<Vec<_>>>()?
+        .into_iter()
+        .map(|row| row_to_info(&conn, row))
+        .collect::<Result<Vec<_>>>()?;
 
     Ok(keys)
 }
@@ -372,8 +373,11 @@ fn load_scopes(conn: &rusqlite::Connection, key_id: &str) -> Result<Vec<Scope>> 
             let permission: String = row.get(1)?;
             Ok((service, permission))
         })?
-        .filter_map(std::result::Result::ok)
+        .collect::<rusqlite::Result<Vec<_>>>()?
+        .into_iter()
         .filter_map(|(s, p)| {
+            // Unknown scope strings from older schema versions are skipped
+            // rather than failing the key lookup — intentional forward compat.
             let service = ServiceName::from_str_strict(&s)?;
             let permission = Permission::from_str_strict(&p)?;
             Some(Scope {

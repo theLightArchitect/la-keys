@@ -50,6 +50,7 @@ uuid = { version = "1", features = ["v4", "serde"] }
 
 # Secret handling — zeroize on drop, redacted Debug
 secrecy = { version = "0.10", features = ["serde"] }
+subtle = "2"
 zeroize = { version = "1", features = ["derive"] }
 
 # Time
